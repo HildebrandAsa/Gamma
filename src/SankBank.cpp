@@ -41,8 +41,6 @@ int main() {
 			break;
 		default:
 			std::cout << "Invalid choice." << std::endl;
-		    std::cin.clear();
-		    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 			break;
 		}
 	} while (choice != 3);
