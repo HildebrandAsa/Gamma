@@ -4,7 +4,11 @@
  * Functions for classes
  */
 
- // User Functions
-void xx (){
 
+// User Constructor Implementation
+User::User(std::string name) {
+	this->name = name;
 }
+User::User(){}
+
+// User Functions
