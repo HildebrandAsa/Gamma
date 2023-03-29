@@ -17,37 +17,40 @@
 
 int main() {
 
-	int choice;
-	std::string username;
-	do {
-		// clear screen?
-		printStartMenu();
-		std::cin >> choice;
-		switch (choice) {
-		case 1:
-			std::cout << "Enter your name: " << std::endl;
-			std::cin >> username;
-			if (login(username))
-			{
-				choice = 3;
-			}
-			break;
-		case 2:
-			createUser();
-			choice = 3;
-			break;
-		case 3:
-			std::cout << "Goodbye!" << std::endl;
-			break;
-		default:
-			std::cout << "Invalid choice." << std::endl;
-			break;
-		}
-	} while (choice != 3);
+//	int choice;
+//	std::string username;
+//	do {
+//		// clear screen?
+//		printStartMenu();
+//		std::cin >> choice;
+//		switch (choice) {
+//		case 1:
+//			std::cout << "Enter your name: " << std::endl;
+//			std::cin >> username;
+//			if (login(username))
+//			{
+//				choice = 3;
+//			}
+//			break;
+//		case 2:
+//			createUser();
+//			choice = 3;
+//			break;
+//		case 3:
+//			std::cout << "Goodbye!" << std::endl;
+//			break;
+//		default:
+//			std::cout << "Invalid choice." << std::endl;
+//			break;
+//		}
+//	} while (choice != 3);
+//
+//	User user1 (username);
+//	std::cout <<"End of program" << std::endl;
 
-	User user1 (username);
-	std::cout <<"End of program" << std::endl;
 
+	User test("C:\\Users\\corne\\eclipse-workspace\\Gamma_Bank\\src\\userdata");
+	test.print_accounts();
 
 
 	return 0;
