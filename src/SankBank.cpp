@@ -24,7 +24,7 @@ int main() {
 
 	do {
 		// Start the inactive function in a separate thread
-		std::thread inactiveThread(inactiveFunction, std::ref(choice));
+//		std::thread inactiveThread(inactiveFunction, std::ref(choice));
 
 		printStartMenu();
 		std::cin >> choice;
@@ -51,7 +51,7 @@ int main() {
 			std::cout << "Confirm exit(1 = yes, 0 = no)" << std::endl;
 			int confirmExit;
 			std::cin >> confirmExit;
-			inactiveThread.join();
+//			inactiveThread.join();
 			if(confirmExit)
 			{
 				std::cout << "Goodbye!" << std::endl;
@@ -62,12 +62,12 @@ int main() {
 				goto loop;
 			}
 		default:
-			inactiveThread.join();
+//			inactiveThread.join();
 			std::cout << "Invalid choice." << std::endl;
 			break;
 		}
 		// Join the inactive thread to prevent it from running after the program has exited
-		inactiveThread.join();
+//		inactiveThread.join();
 
 	} while (choice != 3);
 

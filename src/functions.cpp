@@ -148,24 +148,25 @@ int menuTwoFunc(User user1)
 
 	do{
 		//clearscreen?
-		std::thread inactiveThread(inactiveFunction, std::ref(choice2));
+//		std::thread inactiveThread(inactiveFunction, std::ref(choice2));
 		printUserInterface(user1);
 		std::cin >> choice2;
 		switch(choice2)
 		{
 		case 1:
-//			user1.createSavingAcc();
+			user1.createSavingAcc();
 			break;
 		case 2:
-//			user1.deposit();
+			user1.deposit();
 			break;
 		case 3:
-			// Transfer
+			user1.transaction();
+			break;
 		case 4:
 			std::cout << "Confirm exit(1 = yes, 0 = no)" << std::endl;
 			int confirmExit;
 			std::cin >> confirmExit;
-			inactiveThread.join();
+//			inactiveThread.join();
 			if(confirmExit)
 			{
 				std::cout << "Goodbye!" << std::endl;
@@ -180,7 +181,7 @@ int menuTwoFunc(User user1)
 			std::cout << "Invalid choice." << std::endl;
 			break;
 		}
-		inactiveThread.join();
+//		inactiveThread.join();
 
 	} while (choice2 != 4);
 	return 1;

@@ -6,11 +6,11 @@
 
 //Declaration of classes
 
-//changed to savingsaccount to not be confused with useraccount
+
 struct SavingsAccount
 {
 	int AccNr;
-	int Balance;
+	int balance;
 };
 
 //User
@@ -18,7 +18,7 @@ class User
 {
 private:
 	std::string name_;
-	std::vector<SavingsAccount> accPairs;
+	std::vector<SavingsAccount> accounts_;
 
 public:
 	// Constructor
@@ -26,7 +26,6 @@ public:
 	User(std::string name, int choice);
 
 	//User Functions
-	void printSavingAccounts();
 	std::string GetName();
 	int GetNumAccounts();
 	SavingsAccount GetAccount(int index);
