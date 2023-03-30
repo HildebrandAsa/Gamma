@@ -1,93 +1,161 @@
 #include "classes.h"
+#include "functions.h"
 
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <time.h>
 /*
  * Functions for classes
  */
 
 
-//	 User Constructor Implementation
+// User Constructor Implementation
+User::User(std::string name){
+	name_ = name;
+	srand(time(0));
+	SavingsAccount account = {rand() % 900000 + 100000, 0};
+	accPairs.push_back(account);
+	std::string hashedname = hashFunc(name);
 
-//	User::User(std::string name) {
-//	this->name = name;
-//
-
-
-
-//constructor for existing customer to check current balance
-
-
-User::User(std::string filename){
-
-
-	//open the file thats holding the data.
-	std::ifstream file("C:\\Users\\corne\\eclipse-workspace\\Gamma_Bank\\src\\userdata");
-
-	//check if the file is open. if not, an error message will be displayed. check else down below.
-	if(file.is_open())
+	// Write account number and balance to file
+	std::ofstream outFile("C:\\Users\\corne\\eclipse-workspace\\Gamma_Bank\\src\\userdata" ,std::ios::app);
+	if (outFile.is_open())
 	{
+		outFile << hashedname + " " + std::to_string(account.AccNr) + " " +
+				std::to_string(account.Balance) << std::endl;
+		outFile.close();
+	}
+}
 
-		//check the current statel there is an eventual error with the file before reading in
-		if (file.good())
+//constructor used for saved users
+User::User(std::string name, int choice)
+{
+	name_ = name;
+	std::string hashedname = hashFunc(name);
+	// Open the file for reading
+	std::ifstream infile("C:\\Users\\corne\\eclipse-workspace\\Gamma_Bank\\src\\userdata");
+	std::string line;
+
+	// Iterate over each line in the file
+	while (std::getline(infile, line))
+	{
+		// Split the line into its components
+		std::istringstream iss(line);
+		std::string file_name, accNr_str, balance_str;
+		if (!(iss >> file_name >> accNr_str >> balance_str))
 		{
+			continue;
+		}
 
-			//create a string to store the data
-			std::string line;
+		// If the name matches, add the account to the user's accounts vector
+		if (file_name == hashedname)
+		{
+			int accNr = std::stoi(accNr_str);
+			int balance = std::stoi(balance_str);
 
-			//start a whileloop to start read the data from the files
-
-			while (getline(file,line))
+			// Check if account already exists in user's accounts
+			bool exists = false;
+			for (const SavingsAccount& account : accPairs)
 			{
-				//declare input stream object iss for line to use the operators >>
-				std::istringstream iss(line);
-
-				//create a an struct object account
-				Account account;
-
-				//now lets read in the the line. If read is succes, we store the data into account
-				// and then push data into the account vector accPairs
-				if (iss >> account.AccNr >> account.Balance)
+				if (account.AccNr == accNr)
 				{
-					accPairs.push_back(account);
-					}
-					else
-					{
-						std::cerr << "Error: Failed to read data from line: " << line << "\n";
-					}
-
+					exists = true;
+					break;
+				}
 			}
-			file.close();
 
-			}
-			else
+			// Add the account to the user's accounts vector if it doesn't already exist
+			if (!exists)
 			{
-				std::cerr << "Error: State failure.\n";
+				accPairs.push_back(SavingsAccount{ accNr, balance });
 			}
-
 		}
-		else
-		{
-		std::cerr << "Error: Failed to open file.\n";
-		}
-
 	}
 
-
-
-
-
-
-
-void User:: print_accounts()
-	{
-		for (const auto & account : accPairs)
-			std::cout <<"Account nr: " << account.AccNr << " has current balance of: " << account.Balance<< " SEK" <<std::endl;
-
-	}
-
-
-
-
-
+	// Close the file
+	infile.close();
+}
 
 
 // User Functions
+void User::printSavingAccounts()
+{
+	for (const auto & account : accPairs)
+	{
+		std::cout << "Account nr: " << account.AccNr << " has current balance of: "
+				<< account.Balance << " SEK" << std::endl;
+	}
+
+}
+std::string User::GetName()
+{
+	return name_;
+}
+int User::GetNumAccounts()
+{
+	return accPairs.size();
+}
+SavingsAccount User::GetAccount(int index)
+{
+	return accPairs[index];
+}
+void User::AddAccount(SavingsAccount account)
+{
+	accPairs.push_back(account);
+}
+
+int User::getAccNr(int index)
+{
+	return accPairs[index].AccNr;
+}
+
+int User::getBalance(int index)
+{
+	return accPairs[index].Balance;
+}
+void User::createSavingAcc()
+{
+
+}
+//void User::deposit(const std::string& fileName)
+//{
+//	// open the file in input/output mode
+//	 std::fstream infile("C:\\Users\\corne\\eclipse-workspace\\Gamma_Bank\\src\\userdata",
+//			 	 std::ios::in | std::ios::out);
+//
+//	 //if the file is not open
+//	 if (!infile.is_open())
+//	 {
+//	     std::cerr << "Error: could not open file " << fileName << std::endl;
+//	     return;
+//	 }
+//
+//	 std::string line;
+//	 while (std::getline(infile,line))
+//	 {
+//		 std::istringstream iss(line);
+//		 std::string file_name, accNr_str, balance_str;
+//
+//	 }
+
+
+
+
+
+
+
+
+
+
+//}
+
+
+
+
+
+
+void User::transaction()
+{
+
+}
