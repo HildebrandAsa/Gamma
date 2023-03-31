@@ -17,12 +17,12 @@ void printStartMenu()
 
 {
 	std::cout << "========================" << std::endl;
-	std::cout << " Welcome to Sank Bank" << std::endl;
+	std::cout << " Welcome to Magic Bank"   << std::endl;
 	std::cout << "========================" << std::endl;
-	std::cout << "Make a choice:" << std::endl;
-	std::cout << "1. Login" << std::endl;
-	std::cout << "2. Create account" << std::endl;
-	std::cout << "3. Quit" << std::endl;
+	std::cout << "Make a choice:" 			<< std::endl;
+	std::cout << "1. Login"                 << std::endl;
+	std::cout << "2. Create account"        << std::endl;
+	std::cout << "3. Quit"                  << std::endl;
 	std::cout << "========================" << std::endl;
 }
 //manipulates string (username and password) to store in file
@@ -47,7 +47,7 @@ void createUser(std::string name)
 	std::string hashedname = hashFunc(name);
 
 	//Stores hashed name and password in file
-	std::ofstream file("C:\\Users\\corne\\eclipse\\Gamma_Bank\\logindata", std::ios::app);
+	std::ofstream file("C:\\Users\\corne\\eclipse\\bank_testing\\logindata", std::ios::app);
 	if (file.is_open())
 	{
 		file << hashedname << " " << hashedPassword << std::endl;
@@ -71,7 +71,7 @@ bool login(std::string name)
 	std::string hashedname = hashFunc(name);
 
 	//Reads file and checks if hashed name and password matches
-	std::ifstream file("C:\\Users\\corne\\eclipse\\Gamma_Bank\\logindata");
+	std::ifstream file("C:\\Users\\corne\\eclipse\\bank_testing\\logindata");
 	if (file.is_open())
 	{
 		std::string line;
@@ -105,22 +105,29 @@ bool login(std::string name)
 void printUserInterface(User user1)
 {
 	std::cout << "========================" << std::endl;
-	std::cout << "Welcome " << user1.GetName() << std::endl;
+	std::cout << "Welcome back, " 		    << user1.GetName()<< std::endl;
 	std::cout << "========================" << std::endl;
 
+	std::cout << "Your accounts " << std::endl;
+	std::cout  << std::endl;
 	for (int i = 0; i < user1.GetNumAccounts(); i++)
 	{
-		std::cout << "Account: " << user1.getAccNr(i) << std::endl;
-		std::cout << "Balance: " << user1.getBalance(i) << std::endl;
+			std::cout << "Account["<<i+1<<"] " << user1.getAccNr(i) << std::endl;
+			std::cout << "Balance    " << user1.getBalance(i) <<" $" << std::endl;
+			std::cout << "----------------- " << std::endl;
+			std::cout << std::endl;
 	}
 
-	std::cout << "========================" << std::endl;
+	std::cout << "========================"<< std::endl;
+	std::cout << "Choose option:"          << std::endl;
+	std::cout <<                              std::endl;
+	std::cout << "1. Create account"       << std::endl;
+	std::cout << "2. Deposit" 			   << std::endl;
+	std::cout << "3. Transaction"          << std::endl;
+	std::cout << "4. Quit"                 << std::endl;
 	std::cout << std::endl;
-	std::cout << "1. Create account" << std::endl;
-	std::cout << "2. Deposit" << std::endl;
-	std::cout << "3. Transaction" << std::endl;
-	std::cout << "4. Quit" << std::endl;
-	std::cout << "========================" << std::endl;
+	std::cout << "========================"<< std::endl;
+
 }
 
 void inactiveFunction(int& choice)
@@ -146,24 +153,25 @@ int menuTwoFunc(User user1)
 
 	do{
 		//clearscreen?
-		std::thread inactiveThread(inactiveFunction, std::ref(choice2));
+//		std::thread inactiveThread(inactiveFunction, std::ref(choice2));
 		printUserInterface(user1);
 		std::cin >> choice2;
 		switch(choice2)
 		{
 		case 1:
-//			user1.createSavingAcc();
+			user1.createSavingAcc();
 			break;
 		case 2:
-//			user1.deposit();
+			user1.deposit();
 			break;
 		case 3:
-			// Transfer
+			user1.transaction();
+			break;
 		case 4:
 			std::cout << "Confirm exit(1 = yes, 0 = no)" << std::endl;
 			int confirmExit;
 			std::cin >> confirmExit;
-			inactiveThread.join();
+//			inactiveThread.join();
 			if(confirmExit)
 			{
 				std::cout << "Goodbye!" << std::endl;
@@ -178,48 +186,10 @@ int menuTwoFunc(User user1)
 			std::cout << "Invalid choice." << std::endl;
 			break;
 		}
-		inactiveThread.join();
+//		inactiveThread.join();
 
 	} while (choice2 != 4);
 	return 1;
-}
-
-
-void printUserInterfaceDeposit(User user1)
-{
-	std::cout << "========================" << std::endl;
-	std::cout << user1.GetName() << " ,show me the money! "  << std::endl;
-	std::cout << "========================" << std::endl;
-
-	for (int i = 0; i < user1.GetNumAccounts(); i++)
-	{
-		std::cout << "Account["<<i+1<<"] " << user1.getAccNr(i) << std::endl;
-		std::cout << "Balance $  " << user1.getBalance(i) << std::endl;
-		std::cout << "========================" << std::endl;
-	}
-
-
-	std::cout << "Choose account Superman:" <<  std::endl;
-
-
-	std::cout << "[1]" << std::endl;//<< user1.getAccNr(i) << std::endl;
-	std::cout << "[2]"<< std::endl;//<< user1.getAccNr(i+1) << std::endl;
-	std::cout << "========================" << std::endl;
-	int choice;
-
-
-//	std::cin >> choice;
-//	switch (choice) {
-//	    case 1:
-//	        accIndex = 0;
-//	        break;
-//	    case 2:
-//	        accIndex = 1;
-//	        break;
-//	    default:
-//	        std::cout << "Invalid choice!" << std::endl;
-//	        return;
-//	}
 }
 
 void printSuccesDeposit(User user1){
@@ -236,6 +206,19 @@ void printSuccesDeposit(User user1){
 	}
 }
 
+void printUserInterfaceDeposit(User user1)
+{
+	std::cout << "========================" << std::endl;
+	std::cout << user1.GetName() << " ,show me the money! "  << std::endl;
+	std::cout << "========================" << std::endl;
+
+	for (int i = 0; i < user1.GetNumAccounts(); i++)
+	{
+		std::cout << "Account["<<i+1<<"] " 		<< user1.getAccNr(i) << std::endl;
+		std::cout << "Balance     " 			<< user1.getBalance(i) << std::endl;
+		std::cout << "========================" << std::endl;
+	}
 
 
 
+}

@@ -1,19 +1,3 @@
-/*
- * classes.h
- *
- *  Created on: 29 Mar 2023
- *      Author: corne
- */
-
-#ifndef CLASSES_H_
-#define CLASSES_H_
-
-
-
-
-
-#endif /* CLASSES_H_ */
-
 #pragma once
 #include <iostream>
 #include <string>
@@ -22,11 +6,11 @@
 
 //Declaration of classes
 
-//changed to savingsaccount to not be confused with useraccount
+
 struct SavingsAccount
 {
 	int AccNr;
-	int Balance;
+	int balance;
 };
 
 //User
@@ -34,7 +18,7 @@ class User
 {
 private:
 	std::string name_;
-	std::vector<SavingsAccount> accPairs;
+	std::vector<SavingsAccount> accounts_;
 
 public:
 	// Constructor
@@ -42,7 +26,6 @@ public:
 	User(std::string name, int choice);
 
 	//User Functions
-	void printSavingAccounts();
 	std::string GetName();
 	int GetNumAccounts();
 	SavingsAccount GetAccount(int index);
@@ -52,5 +35,6 @@ public:
 	void createSavingAcc();
 	void deposit();
 	void transaction();
+
 
 };
