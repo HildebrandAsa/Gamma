@@ -130,6 +130,31 @@ void printUserInterface(User user1)
 
 }
 
+void printUserInterface2(User user1)
+{
+
+
+	std::cout << "Your accounts " << std::endl;
+	std::cout  << std::endl;
+	for (int i = 0; i < user1.GetNumAccounts(); i++)
+	{
+			std::cout << "Account["<<i+1<<"] " << user1.getAccNr(i) << std::endl;
+			std::cout << "Balance    " << user1.getBalance(i) <<" $" << std::endl;
+			std::cout << "----------------- " << std::endl;
+			std::cout << std::endl;
+	}
+
+	std::cout << "========================"<< std::endl;
+	std::cout << "Choose option:"          << std::endl;
+	std::cout <<                              std::endl;
+	std::cout << "1. Create account"       << std::endl;
+	std::cout << "2. Deposit" 			   << std::endl;
+	std::cout << "3. Transaction"          << std::endl;
+	std::cout << "4. Quit"                 << std::endl;
+	std::cout << std::endl;
+	std::cout << "========================"<< std::endl;
+
+}
 void inactiveFunction(int& choice)
 {
 	std::cout << "You have 10 seconds before inactivity" << std::endl;
@@ -150,11 +175,19 @@ int menuTwoFunc(User user1)
 {
 	loop2:
 	int choice2 = 0;
-
+	int menuflag = 0;
 	do{
 		//clearscreen?
 //		std::thread inactiveThread(inactiveFunction, std::ref(choice2));
-		printUserInterface(user1);
+
+		if(menuflag == 0){
+			printUserInterface(user1);
+		}
+		else
+			{
+				printUserInterface2(user1);
+			}
+
 		std::cin >> choice2;
 		switch(choice2)
 		{
@@ -163,10 +196,13 @@ int menuTwoFunc(User user1)
 			break;
 		case 2:
 			user1.deposit();
+			menuflag = 1;
 			break;
 		case 3:
 			user1.transaction();
+			menuflag = 1;
 			break;
+
 		case 4:
 			std::cout << "Confirm exit(1 = yes, 0 = no)" << std::endl;
 			int confirmExit;

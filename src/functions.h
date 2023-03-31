@@ -25,3 +25,4 @@ bool login(std::string name);
 void printUserInterface(User user1);
 int menuTwoFunc(User user1);
 void inactiveFunction(int& choice);
+void printUserInterface2(User user1);
